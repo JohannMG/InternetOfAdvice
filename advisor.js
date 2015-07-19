@@ -31,7 +31,7 @@ stream.on('warning', function (warning) {
 });
 
 function noneWords(str) {
-  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co', 'follow me', '@Real_Liam_Payne' ];
+  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co', 'follow me', 'Real_Liam_Payne', 'all1dcrew' ];
   var POSmatches = [ 'you should' ];
    
   if (str.substring(0,2) === "RT" ){
