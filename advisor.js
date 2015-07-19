@@ -9,11 +9,12 @@ var stream = Twitter.stream('statuses/filter', { track: 'should' });
 
 stream.on('tweet', function sendToRT(tweet) {
  
-  if (tweet.text.charAt(0) !== "@" && (tweet.user.screen_name !== Auth.username) && noneWords(tweet.text) )
+  if (tweet.text.charAt(0) !== "@" && (tweet.user.screen_name !== Auth.username) &&
+      tweet.user.friends_count > 1999   && tweet.possibly_sensitive === false && 
+      noneWords(tweet.text) )
   {
-     if (tweet.user.friends_count > 299   && tweet.possibly_sensitive === false  ) {
-       retweetTweet(tweet);
-     }
+    
+    retweetTweet(tweet);
   }
   
 });
@@ -30,8 +31,8 @@ stream.on('warning', function (warning) {
 });
 
 function noneWords(str) {
-  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co' ];
-  var POSmatches = [ 'he should', 'she should', 'they should' ];
+  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co',  ];
+  var POSmatches = [ 'you should' ];
    
   if (str.substring(0,2) === "RT" ){
     return false;
@@ -59,7 +60,7 @@ function retweetTweet(tweet){
 
   var twitURL = "https://www.twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str; 
   
-  var TO_tweet =  "SHOULD" + tweet.text.substring(  tweet.text.toLowerCase().indexOf("should")+ 6  )  + ' '+ twitURL;
+  var TO_tweet =  " YOU SHOULD" + tweet.text.substring(  tweet.text.toLowerCase().indexOf("should")+ 10  )  + ' '+ twitURL;
   
   Twitter.post( 'statuses/update', { status: TO_tweet }, function(err, data, response) {
     console.log(tweet.id + " " + tweet.text);
