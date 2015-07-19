@@ -10,5 +10,8 @@
     "twitter"
   ],
   "author": "johannmg",
-  "license": "ask"
+  "license": "ask",
+  "dependencies": {
+    "twit": "^2.1.0"
+  }
 }
