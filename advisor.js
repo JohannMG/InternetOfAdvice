@@ -31,7 +31,7 @@ stream.on('warning', function (warning) {
 });
 
 function noneWords(str) {
-  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co',  ];
+  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co', 'follow me', '@Real_Liam_Payne' ];
   var POSmatches = [ 'you should' ];
    
   if (str.substring(0,2) === "RT" ){
@@ -60,7 +60,7 @@ function retweetTweet(tweet){
 
   var twitURL = "https://www.twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str; 
   
-  var TO_tweet =  " YOU SHOULD" + tweet.text.substring(  tweet.text.toLowerCase().indexOf("should")+ 10  )  + ' '+ twitURL;
+  var TO_tweet =  "YOU SHOULD" + tweet.text.substring(  tweet.text.toLowerCase().indexOf("should")+ 6  )  + ' '+ twitURL;
   
   Twitter.post( 'statuses/update', { status: TO_tweet }, function(err, data, response) {
     console.log(tweet.id + " " + tweet.text);
