@@ -6,7 +6,7 @@ var fs = require('fs');
 var Twitter = new Twit(  Auth.twitterAuthJSON  );
 var stream = Twitter.stream('statuses/filter', { track: 'should' });
 
-var tweetCounts = 0 ;
+var tweetCounts = 0;
 var tweetFreq = 10;  
 
 stream.on('tweet', function sendToRT(tweet) {
@@ -33,12 +33,12 @@ stream.on('warning', function (warning) {
 });
 
 function noneWords(str) {
-  var NEGmatches = [ 'rt' , 'pic.twitter', 't.co', 'follow me', 'Real_Liam_Payne', 'all1dcrew' ];
-  var POSmatches = [ 'you should' ];
+  var NEGmatches = [ 'pic.twitter', 't.co', 'follow me', 'Real_Liam_Payne', 'all1dcrew', '1d' ];
+  var POSmatch = 'you should';
    
   if (str.substring(0,2) === "RT" ){
     return false;
-  } 
+  }
   
   for (var i = 0; i < NEGmatches.length; i++) {
     if ( str.toLowerCase().indexOf(  NEGmatches[i]  ) > 0  ){
@@ -47,15 +47,11 @@ function noneWords(str) {
     }
   }
   
-  var hasOnePosPhrase = false; 
-  for (var i = 0; i < POSmatches.length; i++) {
-    if ( str.toLowerCase().indexOf(  POSmatches[i] ) > 0 ) {
-      hasOnePosPhrase = true; 
-    }
-    
+  if ( str.toLowerCase().indexOf(POSmatch) > 0 ) {
+    return true;
   }
   
-  return hasOnePosPhrase; 
+  return false; 
 }
 
 function retweetTweet(tweet){
@@ -66,6 +62,9 @@ function retweetTweet(tweet){
   
   Twitter.post( 'statuses/update', { status: TO_tweet }, function(err, data, response) {
     console.log(tweet.id + " " + tweet.text);
+    if (err){
+      console.log(err);
+    }
   });
 
 //  console.log(tweet); 
