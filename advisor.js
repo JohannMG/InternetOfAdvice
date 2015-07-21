@@ -6,14 +6,14 @@ var fs = require('fs');
 var Twitter = new Twit(  Auth.twitterAuthJSON  );
 var stream = Twitter.stream('statuses/filter', { track: 'should' });
 
-  var tweetCounts = 0 ;
-  var tweetFreq = 10;  
+var tweetCounts = 0 ;
+var tweetFreq = 10;  
 
 stream.on('tweet', function sendToRT(tweet) {
  
   if (tweet.text.charAt(0) !== "@" && (tweet.user.screen_name !== Auth.username) &&
       tweet.user.friends_count > 1999   && tweet.possibly_sensitive === false && 
-      noneWords(tweet.text) && tweetCounts % tweetFreq == 0 )
+      noneWords(tweet.text) && tweetCounts % tweetFreq === 0 )
   {
     retweetTweet(tweet);
   }
